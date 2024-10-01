@@ -1,0 +1,136 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;  
+    
+}
+  
+  body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f9f9f9;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    
+  }
+  
+  .container {
+    display: flex;
+    width: 80vw;
+    max-width: 1200px;
+    height: 80vh;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    border-bottom-right-radius: 30px;
+
+}
+  
+.left-section {
+    flex: 1;
+    background-color: white;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .logo {
+    margin-bottom: 100px;
+    margin-right: 70%;
+  }
+  
+  .logo img {
+    width: 50px; /* Adjust size as needed */
+  }
+  
+  .left-section h1 {
+    font-size: 36px;
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+  
+  .left-section p {
+    font-size: 16px;
+    color: #888;
+    margin-bottom: 30px;
+  }
+  
+  .form {
+    width: 100%;
+    max-width: 400px;
+ 
+  }
+  
+  .form input {
+    width: 100%;
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+  }
+  
+  .form button {
+    width: 100%;
+    padding: 15px;
+    background-color: black;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  .google-button {
+    width: 100%;
+    padding: 15px;
+    border: 1px solid #ddd;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 5px;
+  }
+  
+  .google-button img {
+    margin-right: 10px;
+  }
+  
+  .or-divider {
+    text-align: center;
+    margin: 20px 0;
+    font-size: 14px;
+    color: #888;
+  }
+  
+  .login-link {
+    font-size: 14px;
+    color: #ff9900;
+    cursor: pointer;
+    text-align: center;
+  }
+  
+  .right-section {
+    flex: 1;
+    background: url('./images/a.png');
+    background-size: 160%;
+    background-position: 10%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+}
+
+  
+
+  
