@@ -1,21 +1,21 @@
 import React from 'react';
 import '../style.css'
 
-const SignUpPage = () => {
+const LogInPage = () => {
 
     const handleClick = () => {
-    
-       const name = document.getElementById('nameValue').value;
+
        const email = document.getElementById('emailValue').value;
        const password = document.getElementById('passwordValue').value;
        
+//change this to get
+
         const requestOptions = {
             method : "POST",
             headers: {"Content-Type" : "application/json"},
             body: JSON.stringify(
             {
                 //what we're sending goes here
-                Name : name,
                 Email : email,
                 Password : password
 
@@ -46,8 +46,8 @@ const SignUpPage = () => {
         </div>
         
         
-        <h1>SIGN UP</h1>
-        <p>Create an account to get started.</p>
+        <h1>LOG IN</h1>
+        <p>Log into your account.</p>
 
         <div className="form">
           <div className="google-button">
@@ -61,14 +61,13 @@ const SignUpPage = () => {
 
           <div className="or-divider"> ------- Or -------</div>
 
-          <input type="text" placeholder="Name" id='nameValue' />
           <input type="email" placeholder="Email" id='emailValue'/>
           <input type="password" placeholder="Password" id='passwordValue'/>
 
           <button onClick={() => handleClick()}>Register</button>
         </div>
 
-        <p className="login-link"> <br/> Already have an account? Log in</p>
+        <p className="login-link"> <br/> No account? Sign Up</p>
       </div>
 
       <div className="right-section">
@@ -78,4 +77,4 @@ const SignUpPage = () => {
   );
 };
 
-export default SignUpPage;
+export default LogInPage;
