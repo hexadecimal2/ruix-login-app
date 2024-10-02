@@ -1,7 +1,9 @@
 const express = require('express');
 const cors = require('cors');
 const mysql = require('mysql2');
+const cookieParser = require('cookie-parser');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 const app = express();
 
 
@@ -14,26 +16,24 @@ const pool = mysql.createPool({
     connectionLimit : 30
 }).promise();
 
-app.use(cors({origin:'http://localhost:3000'}));
+app.use(cookieParser());
+app.use(cors({origin:'http://localhost:3000', credentials : true}));
 app.use(express.json());
 
-async function getData(){
-    
-/*
-    const result = await pool.query('SELECT * FROM users;'); 
-     return result[0][0]
 
-    await the query and return the selection
+app.get('/request', async (req, res) => {
 
-*/
+const token =  req.cookies.token;
+const data = jwt.verify(token, 'amongus')
+
+if (data !== undefined){
+    return res.send({message : 'success', userdata : data});}
+else{
+    return res.send({message : 'failed to verify token!'});
 }
 
-/*
+})
 
-routes needed -> get data to check if email and password exist
-              ->  
-
-*/
 
 app.post('/add', async (req, res) => {
 
@@ -55,9 +55,9 @@ app.post('/add', async (req, res) => {
    const hash = await bcrypt.hash(data.Password, 10);
     
    //insert the password into the database + put it into the token
-   // await pool.query(`INSERT INTO users (name) VALUES ('${data.Name}')`)
-   // const id = await pool.query(`SELECT * FROM users WHERE userID = (SELECT max(userID) FROM users);`);
-   // await pool.query(`INSERT INTO user_data (userID, email, password) VALUES (${id[0][0].userID}, '${data.Email}', '${hash}');`)
+   await pool.query(`INSERT INTO users (name) VALUES ('${data.Name}')`)
+   const id = await pool.query(`SELECT * FROM users WHERE userID = (SELECT max(userID) FROM users);`);
+   await pool.query(`INSERT INTO user_data (userID, email, password) VALUES (${id[0][0].userID}, '${data.Email}', '${hash}');`)
     
    const msg = await bcrypt.compare(data.Password, hash);
     console.log(msg);
@@ -65,6 +65,42 @@ app.post('/add', async (req, res) => {
     return res.send({message : 'success'});
 
 })
+
+app.post('/getuser', async (req, res) => {
+
+   const data = req.body;
+   const password = await pool.query(`SELECT password FROM user_data WHERE email = '${data.Email}'`) 
+
+
+   if (data.Password == '') {
+    return res.send({message : 'nopassword'});
+   } else {
+   
+   const confirm = await bcrypt.compare(data.Password, password[0][0].password)
+   
+   if (confirm) {
+        const id = await pool.query(`SELECT userID FROM user_data WHERE email = '${data.Email}'`);
+        const name = await pool.query(`SELECT name FROM users WHERE userID = ${id[0][0].userID}`);
+        const userdata = {userID : id[0][0].userID, Name : name[0][0].name, Email : data.Email, Password : data.Password}
+        const token = jwt.sign(userdata, 'amongus', {expiresIn : "1h"});
+        
+        console.log(token);
+        
+        res.cookie("token", token, {httpOnly : true})
+        
+        return res.send({message : 'passwordvalid', UserData : userdata })
+   } else {
+        return res.send({message : 'passwordnotvalid'})
+   }
+
+
+
+
+}
+
+})
+
+
 
 app.listen(5000, function(){
     console.log('server running at port 5000');   

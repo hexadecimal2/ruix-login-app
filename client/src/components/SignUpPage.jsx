@@ -1,7 +1,11 @@
 import React from 'react';
 import '../style.css'
+import { useNavigate } from 'react-router-dom';
 
 const SignUpPage = () => {
+
+
+  const navigate = useNavigate();
 
     const handleClick = () => {
     
@@ -22,9 +26,16 @@ const SignUpPage = () => {
             })
         }
   
-       fetch('http://localhost:5000/add', requestOptions).then((response) => response.json()).then((data) =>  alert(data.message));
+       fetch('http://localhost:5000/add', requestOptions).then((response) => response.json()).then((data) =>  {
+
+        if (data.message === 'success') {
+          navigate('/login');
+        }
+
+       });
 
     }
+
 
     return (
     <div className="container">
@@ -68,7 +79,7 @@ const SignUpPage = () => {
           <button onClick={() => handleClick()}>Register</button>
         </div>
 
-        <p className="login-link"> <br/> Already have an account? Log in</p>
+        <p className="login-link" onClick={() => {navigate('/login')}}> <br/> Already have an account? Log in</p>
       </div>
 
       <div className="right-section">

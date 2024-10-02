@@ -1,18 +1,23 @@
 import React from 'react';
 import '../style.css'
+import { useNavigate } from 'react-router-dom';
+
+
 
 const LogInPage = () => {
 
+    const navigate = useNavigate();
+
     const handleClick = () => {
 
-       const email = document.getElementById('emailValue').value;
-       const password = document.getElementById('passwordValue').value;
+       const email = document.getElementById('loginEmailValue').value;
+       const password = document.getElementById('loginPasswordValue').value;
        
-//change this to get
 
         const requestOptions = {
             method : "POST",
             headers: {"Content-Type" : "application/json"},
+            credentials: 'include',
             body: JSON.stringify(
             {
                 //what we're sending goes here
@@ -22,9 +27,25 @@ const LogInPage = () => {
             })
         }
   
-       fetch('http://localhost:5000/add', requestOptions).then((response) => response.json()).then((data) =>  alert(data.message));
+       fetch('http://localhost:5000/getuser', requestOptions).then((response) => response.json()).then((data) =>  {
+       if (data.message === 'nopassword'){
+        alert('Please insert a password / valid email');
+       }
+
+       if (data.message === 'passwordnotvalid'){
+        alert('Email / Password Incorrect')
+       }
+
+       if (data.message === 'passwordvalid'){
+        alert('Success!');
+        navigate('/request');
+       }
+
+       });
+
 
     }
+
 
     return (
     <div className="container">
@@ -61,13 +82,13 @@ const LogInPage = () => {
 
           <div className="or-divider"> ------- Or -------</div>
 
-          <input type="email" placeholder="Email" id='emailValue'/>
-          <input type="password" placeholder="Password" id='passwordValue'/>
+          <input type="email" placeholder="Email" id='loginEmailValue'/>
+          <input type="password" placeholder="Password" id='loginPasswordValue'/>
 
-          <button onClick={() => handleClick()}>Register</button>
+          <button onClick={() => handleClick()}>Log In</button>
         </div>
 
-        <p className="login-link"> <br/> No account? Sign Up</p>
+        <p className="login-link" onClick={() => {navigate('/signup')}}> <br/> No account? Sign Up</p>
       </div>
 
       <div className="right-section">

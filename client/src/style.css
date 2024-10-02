@@ -39,8 +39,8 @@
   }
   
   .logo {
-    margin-bottom: 100px;
-    margin-right: 70%;
+    display: flex;
+    flex: 1px;
   }
   
   .logo img {
