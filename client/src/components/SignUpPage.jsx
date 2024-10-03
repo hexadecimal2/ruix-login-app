@@ -27,9 +27,15 @@ const SignUpPage = () => {
         }
   
        fetch('http://localhost:5000/add', requestOptions).then((response) => response.json()).then((data) =>  {
+        
+
+
 
         if (data.message === 'success') {
           navigate('/login');
+        }
+        else{
+          alert(data.message);
         }
 
        });
@@ -83,7 +89,7 @@ const SignUpPage = () => {
       </div>
 
       <div className="right-section">
-        {/* Right section is for the abstract design or image */}
+        {/* image goes here */}
       </div>
     </div>
   );

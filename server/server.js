@@ -59,8 +59,8 @@ app.post('/add', async (req, res) => {
    const id = await pool.query(`SELECT * FROM users WHERE userID = (SELECT max(userID) FROM users);`);
    await pool.query(`INSERT INTO user_data (userID, email, password) VALUES (${id[0][0].userID}, '${data.Email}', '${hash}');`)
     
-   const msg = await bcrypt.compare(data.Password, hash);
-    console.log(msg);
+   //const msg = await bcrypt.compare(data.Password, hash);
+   //console.log(msg);
 
     return res.send({message : 'success'});
 

@@ -54,7 +54,7 @@ const RequestPage = () => {
       </div>
 
       <div className="right-section">
-        {/* Right section is for the abstract design or image */}
+        {/* image goes here */}
       </div>
     </div>
   );
